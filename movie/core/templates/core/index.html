@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <h1>{{ title }}</h1>
+    <hr>
+
+    <div class="row justify-content-end mb-4">
+        <div class="col-md-4">
+            <form action="{{ url_for('movie.search_movie') }}" method="GET" class="input-group">
+                <input type="text" 
+                       name="q" 
+                       class="form-control rounded-pill-start" 
+                       placeholder="ค้นหาชื่อหนัง..."
+                       value="{{ q if q else '' }}">
+                <button class="btn btn-success rounded-pill-end" type="submit">
+                    <i class="bi bi-search"></i> Search
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for movie in movies.items %} <div class="col-lg-3">
+                <div class="card mt-4 card-movie shadow-sm">
+                    <a href="{{ url_for('core.detail', id=movie.id) }}">
+                        <img src="{{ movie.img_url }}" alt="{{ movie.name }}" class="card-img-top bg-secondary" style="height: 350px; object-fit: cover;">
+                    </a>
+                    <div class="card-body">
+                        <h2 class="text-success h5">{{ movie.name }}</h2>
+                        {% for type in movie.types %}
+                            <span class="btn btn-outline-secondary btn-sm">
+                                {{ type.name }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12 text-center mt-5">
+                <h3 class="text-muted">ไม่พบรายการหนังที่คุณต้องการ</h3>
+                <a href="{{ url_for('core.index') }}" class="btn btn-outline-primary mt-3">ล้างการค้นหา</a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="d-flex justify-content-left mt-5 mb-5">
+        {% include "core/pagination.html" %}
+    </div>
+    
+</div>
+
+<style>
+    .rounded-pill-start { border-radius: 50px 0 0 50px !important; padding-left: 20px; }
+    .rounded-pill-end { border-radius: 0 50px 50px 0 !important; padding-right: 20px; }
+</style>
+{% endblock %}

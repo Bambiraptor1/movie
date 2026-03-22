@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-3 mb-3">
+    <h1>{{title}}</h1>
+    <hr>
+    <div class="card mt-3">
+      <div class="card-header">
+        <h3>Edit Movie Form</h3>
+      </div>
+      <div class="card-body">
+        <form method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Movie Name</label>
+            <input value="{{ movie.name }}" name="name" type="text" class="form-control" id="name" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="director" class="form-label">Director</label>
+            <input value="{{ movie.director }}" name="director" type="text" class="form-control" id="director" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="release_year" class="form-label">Release Year</label>
+            <input value="{{ movie.release_year }}" name="release_year" type="number" class="form-control" id="release_year" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" class="form-control" id="description" rows="3">{{ movie.description }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="img_url" class="form-label">Image URL</label>
+            <input value="{{ movie.img_url }}" name="img_url" type="text" class="form-control" id="img_url" required>
+            
+        </div>
+
+        <div class="mb-3">
+            <label for="movie_types" class="form-label">Movie Types</label>
+            <select name="movie_types" class="form-select" multiple>
+            {% for ty in movie_types %}
+                <option value="{{ ty.id }}" {% if ty in movie.types %} selected {% endif %}>
+                {{ ty.name }}
+                </option>
+            {% endfor %}
+            </select>
+          </div>
+
+        <button type="submit" class="btn btn-outline-success">
+            <i class="bi bi-pencil-square"></i> Update Movie
+        </button>
+        <a href="{{ url_for('movie.index') }}" class="btn btn-secondary">Back to Movie List</a>
+    </form>
+</div>
+{% endblock %}

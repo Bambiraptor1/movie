@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  {{title}}
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-3 mb-3">
+    <h1>{{title}}</h1>
+    <hr>
+    <div class="card mt-3">
+      <div class="card-header">
+        <h3>New Movie Form</h3>
+      </div>
+      <div class="card-body">
+        <form method="post">
+          <div class="mb-3">
+            <label for="name" class="form-label">Movie Name</label>
+            <input name="name" type="text" class="form-control" id="name" required>
+          </div>
+            <div class="mb-3">
+                <label for="director" class="form-label">Movie Director</label>
+                <input name="director" type="text" class="form-control" id="director" required>
+            </div>
+            <div class="mb-3">
+                <label for="release_year" class="form-label">Release Year</label>
+                <input name="release_year" type="number" class="form-control" id="release_year" required>
+            </div>
+          
+          <div class="mb-3">
+            <label for="description" class="form-label">Movie Description</label>
+            <textarea name="description" class="form-control" id="description" rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="img_url" class="form-label">Movie Image Url</label>
+            <input name="img_url" type="text" class="form-control" id="img_url" required>
+          </div>
+            <div class="mb-3">
+            <label for="movie_types" class="form-label">Movie Types</label>
+            <select name="movie_types" class="form-select" multiple>
+            {% for ty in movie_types %}
+                <option value="{{ ty.id }}">{{ ty.name }}</option>
+            {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-outline-secondary">
+            <i class="bi bi-file-earmark-plus"></i>
+            Add New Movie</button>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

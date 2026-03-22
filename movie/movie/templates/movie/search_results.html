@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>ผลการค้นหาสำหรับ: "{{ q }}"</h2>
+    <hr>
+    <div class="row">
+        {% for movie in movies %}
+            <div class="col-lg-3">
+                <div class="card card-movie mt-3">
+                    <img src="{{ movie.img_url }}" class="card-img-top" style="height: 300px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="text-success">{{ movie.name }}</h5>
+                        {% for type in movie.types %}
+                            <span class="btn btn-outline-secondary btn-sm">{{ type.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12 text-center mt-5">
+                <p class="text-muted">ไม่พบหนังที่ชื่อมีคำว่า "{{ q }}"</p>
+                <a href="{{ url_for('core.index') }}" class="btn btn-secondary">กลับหน้าหลัก</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

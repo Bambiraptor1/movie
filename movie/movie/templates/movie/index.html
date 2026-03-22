@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  {{title}}
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-3 mb-3">
+    <h1>{{title}}</h1>
+    <hr>
+    <div class="row">
+      <div class="col-md-6">
+          <a href="{{ url_for('movie.new_movie') }}" class="btn btn-outline-secondary">
+          <i class="bi bi-file-earmark-plus"></i>
+            Add New Movie
+          </a>
+        </div>
+        <div class="col-md-6"></div>
+      </div>
+      <table class="table table-hover mt-3 align-middle" style="border-radius: 15px; overflow: hidden;">
+      <thead>
+        <th>#</th>
+        <th>Name</th>
+        <th>Created At</th>
+    
+      </thead>
+      <tbody>
+            {% for movie in movies %}
+                <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ movie.name }}</td>
+                <td>{{ movie.created_at.strftime('%d-%m-%Y, %H:%M:%S') }}</td>
+                
+                <td>
+                    <a href="{{ url_for('movie.edit_movie', id=movie.id) }}" class="btn btn-outline-warning btn-sm">
+                    <i class="bi bi-pencil-square"></i> edit
+                    </a>
+                    <form action="{{ url_for('movie.delete_movie', id=movie.id) }}" method="POST" class="d-inline" onsubmit="return confirm('คุณต้องการลบรายการนี้หรือไม่?');">
+                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                        <i class="bi bi-trash"></i> delete
+                    </button>
+                    </form>
+                </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+    </table>
+    </div>
+  </div>
+{% endblock %}
